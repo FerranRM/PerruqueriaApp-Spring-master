@@ -8,6 +8,8 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Client implements Serializable {
@@ -19,7 +21,7 @@ public class Client implements Serializable {
     public Client() {
     }
 
-    public Client(String nom, Integer preu, Boolean sexe, Integer pentinatClient, Date data, Long id) {
+    public Client(String nom, Integer preu, Boolean sexe, Integer pentinatClient, Date data) {
         this.nomClient = nom;
         this.preuTotal = preu;
         this.sexeClient = sexe;
@@ -50,11 +52,18 @@ public class Client implements Serializable {
     @NotNull
     private Date data;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
-    private Collection<Producte> productes;
+    /*@OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
+    private Collection<Producte> productes;*/
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "productes_comprats",
+            joinColumns = @JoinColumn(name="client_id"),
+            inverseJoinColumns = @JoinColumn(name = "producte_id"))
+    private Set<Producte> productes;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "fk_perruquer")
+    @JoinColumn(name = "perruquer_id")
     private Perruquer perruquer;
 
     @Column(name = "fk_perruquer", insertable = false, updatable = false)
@@ -129,20 +138,13 @@ public class Client implements Serializable {
 
     public void setIdPerrCorresponent(Long id) {this.id_perruquerCorresponent = id;}*/
 
-    @JsonView(Views.Complete.class)
-    public Collection<Producte> getProductes() {
-        // Since tasks is collection controlled by JPA, it has LAZY loading by default. That means
-        // that you have to query the object (calling size(), for example) to get the list initialized
-        // More: http://www.javabeat.net/jpa-lazy-eager-loading/
-        productes.size();
-        return productes;
-    }
+    public Set<Producte> getProductes() { return productes; }
 
-    public void addProducte(Producte producte) {
-        productes.add(producte);
-    }
+    public void setProductes(Set<Producte> productes) { this.productes = productes; }
 
-    @JsonIgnore
+
+
+
     public Perruquer getPerruquer() {
         return perruquer;
     }
@@ -155,6 +157,9 @@ public class Client implements Serializable {
     public long getPerruquerId() {
         return perruquerId;
     }
+
+
+
 
 
 }

@@ -36,13 +36,11 @@ public class ProducteController extends BaseController {
 
         //Long userId = getLoggedUser(session);
 
-        producteService.addProducte(producte.producte_id, producte.descProducte, producte.preuProducte);
+        producteService.addProducte(producte.descProducte, producte.preuProducte);
         return BaseController.OK_MESSAGE;
     }
 
     static class R_Producte {
-        @NotNull
-        private Long producte_id;
 
         @NotNull
         private String descProducte;

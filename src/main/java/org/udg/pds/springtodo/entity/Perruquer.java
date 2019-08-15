@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity(name = "perruquers")
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"email", "nomPerruquer"}))
@@ -43,6 +44,9 @@ public class Perruquer implements Serializable {
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "perruquer")
   private Collection<Task> tasks;
+
+  /*@OneToMany(mappedBy = "perruquer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  private Set<Client> clients;*/
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "perruquer")
   private Collection<Client> clients;
@@ -96,6 +100,12 @@ public class Perruquer implements Serializable {
   public void addClient(Client client) {
     clients.add(client);
   }
+
+  /*public Set<Client> getClients() { return clients; }
+
+  public void setClients(Set<Client> clients) {
+    this.clients = clients;
+  }*/
 
 
 

@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonView;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Producte implements Serializable {
@@ -17,9 +19,8 @@ public class Producte implements Serializable {
     public Producte() {
     }
 
-    public Producte(Long id, String descProducte, Integer preuProducte) {
+    public Producte(String descProducte, Integer preuProducte) {
         this.descProducte = descProducte;
-        this.producte_id = id;
         this.preuProducte = preuProducte;
     }
 
@@ -33,12 +34,9 @@ public class Producte implements Serializable {
     @NotNull
     private Integer preuProducte;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "fk_client")
-    private Client client;
+    @ManyToMany(mappedBy = "productes")
+    private Set<Client> clients;
 
-    @Column(name = "fk_client", insertable = false, updatable = false)
-    private Long clientId;
 
 
 
@@ -70,19 +68,9 @@ public class Producte implements Serializable {
     }
 
 
-    @JsonIgnore
-    public Client getClient() {
-        return client;
-    }
+    public Set<Client> getClients() { return clients; }
 
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    @JsonView(Views.Complete.class)
-    public long getClientId() {
-        return clientId;
-    }
+    public void setClients(Set<Client> clients) { this.clients = clients; }
 
 
 }

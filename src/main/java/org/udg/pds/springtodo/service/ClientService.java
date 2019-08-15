@@ -4,9 +4,9 @@ import com.google.api.client.util.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.udg.pds.springtodo.controller.exceptions.ServiceException;
 import org.udg.pds.springtodo.entity.*;
-import org.udg.pds.springtodo.repository.ClientFetRepository;
 import org.udg.pds.springtodo.repository.ClientRepository;
 
 import java.rmi.server.ServerCloneException;
@@ -25,8 +25,6 @@ public class ClientService {
     @Autowired
     ClientRepository clientRepository;
 
-    @Autowired
-    ClientFetRepository clientFetRepository;
 
     public ClientRepository crud() {
         return clientRepository;
@@ -40,23 +38,25 @@ public class ClientService {
             return ot.get();
     }
 
-    public Client addClient(String nom, Integer preu, Boolean sexe, Integer tipusTall,Date data,Long id) {
-        Client nouClient = new Client(nom, preu, sexe, tipusTall,data,id);
-        clientRepository.save(nouClient);
+    @Transactional
+    public Client addClient(String nom, Integer preu, Boolean sexe, Integer tipusTall,Date data, Long perruquerId) {
 
-        //Obtenim el dia actual per poder afegir el client a ClientFet
-        Date currentTime = Calendar.getInstance().getTime();
-        Calendar calendar = GregorianCalendar.getInstance();
+        try {
+            Perruquer user = perruquerService.getPerruquer(perruquerId);
 
-        //Creem Data
-        Data dataHora = new Data(currentTime,calendar.get(Calendar.HOUR_OF_DAY));
+            Client nouClient = new Client(nom, preu, sexe, tipusTall, data);
 
-        //Creem ClientFet i el guardem
-        /*ClientFet nouClientFet = new ClientFet(data,nouClient,perruquerService.getPerruquer((long) 1));
-        //COMO OBTENGO EL ID DEL PELUQUERO ACTUAL?????????????????????
-        clientFetRepository.save(nouClientFet);*/
+            nouClient.setPerruquer(user);
 
-        return nouClient;
+            user.addClient(nouClient);
+
+            clientRepository.save(nouClient);
+            return nouClient;
+        } catch (Exception ex) {
+            // Very important: if you want that an exception reaches the EJB caller, you have to throw an ServiceException
+            // We catch the normal exception and then transform it in a ServiceException
+            throw new ServiceException(ex.getMessage());
+        }
 
     }
 
@@ -66,4 +66,7 @@ public class ClientService {
         return StreamSupport.stream(clientRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
     }
+
+
+
 }

@@ -1,26 +1,21 @@
 package org.udg.pds.springtodo;
 
 import io.minio.MinioClient;
+import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.udg.pds.springtodo.entity.Client;
-import org.udg.pds.springtodo.entity.IdObject;
-import org.udg.pds.springtodo.entity.Tag;
-import org.udg.pds.springtodo.entity.Perruquer;
-import org.udg.pds.springtodo.service.ClientService;
-import org.udg.pds.springtodo.service.TagService;
-import org.udg.pds.springtodo.service.TaskService;
-import org.udg.pds.springtodo.service.PerruquerService;
+import org.udg.pds.springtodo.entity.*;
+import org.udg.pds.springtodo.repository.ClientRepository;
+import org.udg.pds.springtodo.repository.PerruquerRepository;
+import org.udg.pds.springtodo.repository.ProducteRepository;
+import org.udg.pds.springtodo.service.*;
 
 import javax.annotation.PostConstruct;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.*;
 
 @Service
 public class Global {
@@ -36,7 +31,21 @@ public class Global {
 
     @Autowired
     private
+    PerruquerRepository perruquerRepository;
+
+    @Autowired
+    private
     ClientService clientService;
+
+    @Autowired
+    private ClientRepository clientRepository;
+
+    @Autowired
+    private
+    ProducteService producteService;
+
+    @Autowired
+    private ProducteRepository producteRepository;
 
     @Autowired
     private
@@ -45,6 +54,7 @@ public class Global {
     @Autowired
     private
     TagService tagService;
+
 
     @Value("${todospring.minio.url:}")
     private String minioURL;
@@ -86,15 +96,50 @@ public class Global {
         initData();
     }
 
+
     private void initData() {
         logger.info("Starting populating database ...");
-        Perruquer perruquer = perruquerService.register("fer", "fer@hotmail.com", "123");
 
         Date currentTime = Calendar.getInstance().getTime();
-        Calendar calendar = GregorianCalendar.getInstance();
 
-        clientService.addClient("Ferran Rodriguez", 12, false,1,currentTime,perruquer.getId());
-        clientService.addClient("David Tellez", 19, false,2,currentTime, perruquer.getId());
+        Producte producte = new Producte("Crema para la cara",8);
+        Producte producte2 = new Producte("Laca para el pelo",5);
+        producteService.addProducte("Cera para el pelo",14);
+        producteService.addProducte("Cera en polvo para el pelo",12);
+        producteService.addProducte("Champú especial",8);
+        producteService.addProducte("Aceite para la barba",7);
+        producteService.addProducte("Gomina para el pelo",9);
+
+        Perruquer perruquer = perruquerService.register("fer", "fer@hotmail.com", "123");
+
+
+        Client client = new Client("Ferran Rodriguez", 12, false,1,currentTime);
+        //Client client2 = new Client("David Tellez", 19, false,2,currentTime);
+
+
+        Set<Producte> aaa = new HashSet<Producte>();
+        aaa.add(producte);
+        //aaa.add(producte2);
+        client.setProductes(aaa);
+        clientRepository.save(client);
+
+
+        Set<Client> aaa1 = new HashSet<Client>();
+        aaa1.add(client);
+        producte.setClients(aaa1);
+        producte2.setClients(aaa1);
+        producteRepository.save(producte);
+        producteRepository.save(producte2);
+
+
+
+
+
+
+
+
+
+
 
         IdObject taskId = taskService.addTask("Una tasca", perruquer.getId(), new Date(), new Date());
         Tag tag = tagService.addTag("ATag", "Just a tag");

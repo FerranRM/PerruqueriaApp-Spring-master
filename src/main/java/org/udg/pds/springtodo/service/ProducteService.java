@@ -33,9 +33,9 @@ public class ProducteService {
             return ot.get();
     }
 
-    public Producte addProducte(Long id, String descProducte, Integer preuProducte) {
+    public Producte addProducte(String descProducte, Integer preuProducte) {
         try {
-            Producte nouProducte = new Producte(id, descProducte, preuProducte);
+            Producte nouProducte = new Producte(descProducte, preuProducte);
 
             producteRepository.save(nouProducte);
             return nouProducte;

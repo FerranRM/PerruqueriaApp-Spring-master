@@ -40,7 +40,7 @@ public class ClientController extends BaseController {
 
         Long userId = getLoggedUser(session);
 
-        clientService.addClient(client.nomClient, client.preuTotal, client.sexeClient, client.pentinatClient,client.data,client.id_perruquerCorresponent);
+        clientService.addClient(client.nomClient, client.preuTotal, client.sexeClient, client.pentinatClient,client.data,userId);
         return BaseController.OK_MESSAGE;
     }
 
@@ -55,7 +55,5 @@ public class ClientController extends BaseController {
         private Integer pentinatClient;
         @NotNull
         private Date data;
-        @NotNull
-        private Long id_perruquerCorresponent;
     }
 }
