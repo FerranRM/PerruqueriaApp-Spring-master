@@ -39,7 +39,7 @@ public class ClientService {
     }
 
     @Transactional
-    public Client addClient(String nom, Integer preu, Boolean sexe, Integer tipusTall,Date data, Long perruquerId) {
+    public IdObject addClient(String nom, Integer preu, Boolean sexe, Integer tipusTall,Date data, Long perruquerId) {
 
         try {
             Perruquer user = perruquerService.getPerruquer(perruquerId);
@@ -51,7 +51,27 @@ public class ClientService {
             user.addClient(nouClient);
 
             clientRepository.save(nouClient);
-            return nouClient;
+            return new IdObject(nouClient.getIdClient());
+        } catch (Exception ex) {
+            // Very important: if you want that an exception reaches the EJB caller, you have to throw an ServiceException
+            // We catch the normal exception and then transform it in a ServiceException
+            throw new ServiceException(ex.getMessage());
+        }
+
+    }
+
+    @Transactional
+    public IdObject addClient(Client client, Long perruquerId) {
+
+        try {
+            Perruquer user = perruquerService.getPerruquer(perruquerId);
+
+            client.setPerruquer(user);
+
+            user.addClient(client);
+
+            clientRepository.save(client);
+            return new IdObject(client.getIdClient());
         } catch (Exception ex) {
             // Very important: if you want that an exception reaches the EJB caller, you have to throw an ServiceException
             // We catch the normal exception and then transform it in a ServiceException

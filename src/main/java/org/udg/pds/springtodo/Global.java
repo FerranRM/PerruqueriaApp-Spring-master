@@ -114,14 +114,14 @@ public class Global {
 
 
         Client client = new Client("Ferran Rodriguez", 12, false,1,currentTime);
-        //Client client2 = new Client("David Tellez", 19, false,2,currentTime);
+        clientService.addClient("David Tellez", 19, false,2,currentTime,perruquer.getId());
 
 
         Set<Producte> aaa = new HashSet<Producte>();
         aaa.add(producte);
-        //aaa.add(producte2);
+        aaa.add(producte2);
         client.setProductes(aaa);
-        clientRepository.save(client);
+        clientService.addClient(client,perruquer.getId());
 
 
         Set<Client> aaa1 = new HashSet<Client>();
@@ -130,9 +130,6 @@ public class Global {
         producte2.setClients(aaa1);
         producteRepository.save(producte);
         producteRepository.save(producte2);
-
-
-
 
 
 
