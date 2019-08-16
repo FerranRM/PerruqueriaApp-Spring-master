@@ -51,6 +51,9 @@ public class Perruquer implements Serializable {
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "perruquer")
   private Collection<Client> clients;
 
+
+
+
   @JsonView(Views.Private.class)
   public Long getId() {
     return id_perruquer;
@@ -88,6 +91,7 @@ public class Perruquer implements Serializable {
     tasks.add(task);
   }
 
+
   @JsonView(Views.Complete.class)
   public Collection<Client> getClients() {
     // Since tasks is collection controlled by JPA, it has LAZY loading by default. That means
@@ -100,12 +104,6 @@ public class Perruquer implements Serializable {
   public void addClient(Client client) {
     clients.add(client);
   }
-
-  /*public Set<Client> getClients() { return clients; }
-
-  public void setClients(Set<Client> clients) {
-    this.clients = clients;
-  }*/
 
 
 

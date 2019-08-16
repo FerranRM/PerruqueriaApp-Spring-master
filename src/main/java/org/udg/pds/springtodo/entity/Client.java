@@ -66,7 +66,7 @@ public class Client implements Serializable {
     @JoinColumn(name = "perruquer_id")
     private Perruquer perruquer;
 
-    @Column(name = "fk_perruquer", insertable = false, updatable = false)
+    @Column(name = "perruquer_id", insertable = false, updatable = false)
     private Long perruquerId;
 
 
@@ -89,22 +89,6 @@ public class Client implements Serializable {
     public void setNomClient(String nomClient) {
         this.nomClient = nomClient;
     }
-
-    /*public String getCognom1() {
-        return cognom1;
-    }
-
-    public void setCognom1(String cognom1) {
-        this.cognom1 = cognom1;
-    }
-
-    public String getCognom2() {
-        return cognom2;
-    }
-
-    public void setCognom2(String cognom2) {
-        this.cognom2 = cognom2;
-    }*/
 
     public Integer getPreuTotal() {
         return preuTotal;
@@ -134,17 +118,13 @@ public class Client implements Serializable {
 
     public void setData(Date data) {this.data= data;}
 
-    /*public Long getIdPerrCorresponent() {return id_perruquerCorresponent;}
-
-    public void setIdPerrCorresponent(Long id) {this.id_perruquerCorresponent = id;}*/
-
     public Set<Producte> getProductes() { return productes; }
 
     public void setProductes(Set<Producte> productes) { this.productes = productes; }
 
 
 
-
+    @JsonIgnore
     public Perruquer getPerruquer() {
         return perruquer;
     }
@@ -157,7 +137,6 @@ public class Client implements Serializable {
     public long getPerruquerId() {
         return perruquerId;
     }
-
 
 
 

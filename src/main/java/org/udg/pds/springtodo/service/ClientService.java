@@ -81,10 +81,9 @@ public class ClientService {
     }
 
     public Collection<Client> getClients(Long id) {
-        Collection<Client> r = new ArrayList<>();
-
-        return StreamSupport.stream(clientRepository.findAll().spliterator(), false)
-                .collect(Collectors.toList());
+        Optional<Perruquer> p = perruquerService.crud().findById(id);
+        if (!p.isPresent()) throw new ServiceException("Perruquer no existeix");
+        return p.get().getClients();
     }
 
 
