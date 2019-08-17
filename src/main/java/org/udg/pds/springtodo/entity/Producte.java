@@ -34,15 +34,13 @@ public class Producte implements Serializable {
     @NotNull
     private Integer preuProducte;
 
-    @ManyToMany(mappedBy = "productes")
-    private Set<Client> clients;
-
+    /*@ManyToMany(mappedBy = "productes")
+    private Set<Client> clients;*/
 
 
 
     //DECLARACIÓ DELS MÉTODES
 
-    @JsonView(Views.Private.class)
     public Long getId() {
         return producte_id;
     }
@@ -68,9 +66,10 @@ public class Producte implements Serializable {
     }
 
 
+    /*@JsonView(Views.Complete.class)
     public Set<Client> getClients() { return clients; }
 
-    public void setClients(Set<Client> clients) { this.clients = clients; }
+    public void setClients(Set<Client> clients) { this.clients = clients; }*/
 
 
 }

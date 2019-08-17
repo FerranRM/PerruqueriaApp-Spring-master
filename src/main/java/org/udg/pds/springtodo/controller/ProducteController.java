@@ -1,8 +1,10 @@
 package org.udg.pds.springtodo.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.udg.pds.springtodo.entity.Producte;
+import org.udg.pds.springtodo.entity.Views;
 import org.udg.pds.springtodo.service.ProducteService;
 
 import javax.servlet.http.HttpSession;
@@ -25,11 +27,13 @@ public class ProducteController extends BaseController {
         return producteService.getProducte(id);
     }
 
-    @GetMapping(path="/obtenirProductes")
+    @GetMapping
+    @JsonView(Views.Private.class)
     public Collection<Producte> listAllProductes(HttpSession session) {
         Long userId = getLoggedUser(session);
-        return producteService.getProductes(userId);
+        return producteService.getProductes();
     }
+
 
     @PostMapping(path="/afegirProducte", consumes = "application/json")
     public String addProducte(@Valid @RequestBody R_Producte producte, HttpSession session) {

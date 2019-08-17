@@ -6,10 +6,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Client implements Serializable {
@@ -56,11 +53,7 @@ public class Client implements Serializable {
     private Collection<Producte> productes;*/
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "productes_comprats",
-            joinColumns = @JoinColumn(name="client_id"),
-            inverseJoinColumns = @JoinColumn(name = "producte_id"))
-    private Set<Producte> productes;
+    private Collection<Producte> productes = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "perruquer_id")
@@ -82,6 +75,7 @@ public class Client implements Serializable {
         this.id_client = id;
     }
 
+    @JsonView(Views.Private.class)
     public String getNomClient() {
         return nomClient;
     }
@@ -90,6 +84,7 @@ public class Client implements Serializable {
         this.nomClient = nomClient;
     }
 
+    @JsonView(Views.Private.class)
     public Integer getPreuTotal() {
         return preuTotal;
     }
@@ -98,6 +93,7 @@ public class Client implements Serializable {
         this.preuTotal = preuTotal;
     }
 
+    @JsonView(Views.Private.class)
     public Boolean getSexeClient() {
         return sexeClient;
     }
@@ -106,6 +102,7 @@ public class Client implements Serializable {
         this.sexeClient = sexeClient;
     }
 
+    @JsonView(Views.Private.class)
     public Integer getPentinatClient() {
         return pentinatClient;
     }
@@ -114,13 +111,25 @@ public class Client implements Serializable {
         this.pentinatClient = pentinatClient;
     }
 
+    @JsonView(Views.Private.class)
     public Date getData() {return data;}
 
     public void setData(Date data) {this.data= data;}
 
+    /*@JsonView(Views.Complete.class)
     public Set<Producte> getProductes() { return productes; }
 
-    public void setProductes(Set<Producte> productes) { this.productes = productes; }
+    public void setProductes(Set<Producte> productes) { this.productes = productes; }*/
+
+    public void addProducte(Producte producte) {
+        productes.add(producte);
+    }
+
+    @JsonView(Views.Complete.class)
+    public Collection<Producte> getProductes() {
+        productes.size();
+        return productes;
+    }
 
 
 

@@ -28,9 +28,9 @@ public class ClientController extends BaseController {
     @GetMapping("{id}")
     public Client getClient(HttpSession session,
                       @PathVariable("id") Long id) {
+        Long userId = getLoggedUser(session);
 
-        getLoggedUser(session);
-        return clientService.getClient(id);
+        return clientService.getClient(userId, id);
     }
 
     @GetMapping
@@ -60,6 +60,14 @@ public class ClientController extends BaseController {
         Long userId = getLoggedUser(session);
 
         return clientService.addClient(client.nomClient, client.preuTotal, client.sexeClient, client.pentinatClient,client.data,userId);
+    }
+
+    @GetMapping(path="/{id}/productes")
+    public Collection<Producte> getTaskTags(HttpSession session,
+                                       @PathVariable("id") Long clientId) {
+
+        Long userId = getLoggedUser(session);
+        return clientService.getClientsProducte(userId, clientId);
     }
 
     static class R_Client {

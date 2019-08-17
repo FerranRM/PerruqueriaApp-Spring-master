@@ -46,7 +46,7 @@ public class ProducteService {
         }
     }
 
-    public Collection<Producte> getProductes(Long id) {
+    public Collection<Producte> getProductes() {
         Collection<Producte> r = new ArrayList<>();
 
         return StreamSupport.stream(producteRepository.findAll().spliterator(), false)

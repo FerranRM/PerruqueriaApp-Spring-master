@@ -25,17 +25,21 @@ public class ClientService {
     @Autowired
     ClientRepository clientRepository;
 
+    @Autowired
+    protected ProducteService producteService;
+
 
     public ClientRepository crud() {
         return clientRepository;
     }
 
-    public Client getClient(Long id) {
-        Optional<Client> ot = clientRepository.findById(id);
-        if (!ot.isPresent())
+    public Client getClient(Long userId, Long id) {
+        Optional<Client> cl = clientRepository.findById(id);
+        if (!cl.isPresent())
             throw new ServiceException("Client no existeix");
-        else
-            return ot.get();
+        if (cl.get().getPerruquer().getId() != userId)
+            throw new ServiceException("User does not own this task");
+        return cl.get();
     }
 
     @Transactional
@@ -60,7 +64,7 @@ public class ClientService {
 
     }
 
-    @Transactional
+    /*@Transactional
     public IdObject addClient(Client client, Long perruquerId) {
 
         try {
@@ -78,6 +82,38 @@ public class ClientService {
             throw new ServiceException(ex.getMessage());
         }
 
+    }*/
+
+    @Transactional
+    public void addProductesToClient(Long userId, Long clientId, Collection<Long> productes) {
+        Client t = this.getClient(userId, clientId);
+
+        if (t.getPerruquer().getId() != userId)
+            throw new ServiceException("This user is not the owner of the task");
+
+        try {
+            for (Long prodId : productes) {
+                Optional<Producte> otag = producteService.crud().findById(prodId);
+                if (otag.isPresent())
+                    t.addProducte(otag.get());
+                else
+                    throw new ServiceException("Producto no existe");
+            }
+        } catch (Exception ex) {
+            // Very important: if you want that an exception reaches the EJB caller, you have to throw an ServiceException
+            // We catch the normal exception and then transform it in a ServiceException
+            throw new ServiceException(ex.getMessage());
+        }
+    }
+
+    public Collection<Producte> getClientsProducte(Long userId, Long id) {
+        Client t = this.getClient(userId, id);
+        Perruquer u = t.getPerruquer();
+
+        if (u.getId() != userId)
+            throw new ServiceException("Logged user does not own the client");
+
+        return t.getProductes();
     }
 
     public Collection<Client> getClients(Long id) {

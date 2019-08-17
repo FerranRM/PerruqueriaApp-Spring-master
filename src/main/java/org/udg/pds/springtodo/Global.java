@@ -102,9 +102,10 @@ public class Global {
 
         Date currentTime = Calendar.getInstance().getTime();
 
-        Producte producte = new Producte("Crema para la cara",8);
-        Producte producte2 = new Producte("Laca para el pelo",5);
-        producteService.addProducte("Cera para el pelo",14);
+        Producte producte = producteService.addProducte("Crema para la cara",8);
+        producteService.addProducte("Laca para el pelo",5);
+        Producte producte3 = producteService.addProducte("Cera para el pelo",14);
+
         producteService.addProducte("Cera en polvo para el pelo",12);
         producteService.addProducte("Champú especial",8);
         producteService.addProducte("Aceite para la barba",7);
@@ -113,26 +114,15 @@ public class Global {
         Perruquer perruquer = perruquerService.register("fer", "fer@hotmail.com", "123");
 
 
-        Client client = new Client("Ferran Rodriguez", 12, false,1,currentTime);
+        IdObject clientId = clientService.addClient("Ferran Rodriguez", 12, false,1,currentTime,perruquer.getId());
         clientService.addClient("David Tellez", 19, false,2,currentTime,perruquer.getId());
 
 
-        Set<Producte> aaa = new HashSet<Producte>();
-        aaa.add(producte);
-        aaa.add(producte2);
-        client.setProductes(aaa);
-        clientService.addClient(client,perruquer.getId());
 
-
-        Set<Client> aaa1 = new HashSet<Client>();
-        aaa1.add(client);
-        producte.setClients(aaa1);
-        producte2.setClients(aaa1);
-        producteRepository.save(producte);
-        producteRepository.save(producte2);
-
-
-
+        clientService.addProductesToClient(perruquer.getId(), clientId.getId(), new ArrayList<Long>() {{
+            add(producte.getId());
+            add(producte3.getId());
+        }});
 
 
 
