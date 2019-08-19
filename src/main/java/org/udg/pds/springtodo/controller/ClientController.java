@@ -59,7 +59,7 @@ public class ClientController extends BaseController {
 
         Long userId = getLoggedUser(session);
 
-        return clientService.addClient(client.nomClient, client.preuTotal, client.sexeClient, client.pentinatClient,client.data,userId);
+        return clientService.addClient(client.nomClient, client.preuTotal, client.sexeClient, client.pentinatClient,client.dataClient,userId);
     }
 
     @GetMapping(path="/{id}/productes")
@@ -80,6 +80,6 @@ public class ClientController extends BaseController {
 
         private Integer pentinatClient;
         @NotNull
-        private Date data;
+        private Date dataClient;
     }
 }
