@@ -1,9 +1,7 @@
 package org.udg.pds.springtodo.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import org.hibernate.annotations.SQLInsert;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.udg.pds.springtodo.entity.Client;
 import org.udg.pds.springtodo.entity.IdObject;
@@ -14,9 +12,7 @@ import org.udg.pds.springtodo.service.ClientService;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @RequestMapping("/clients")
 @RestController
@@ -40,18 +36,30 @@ public class ClientController extends BaseController {
         return clientService.getClients(userId);
     }
 
-    @GetMapping(path="/obtenirLlistaPreus", consumes = "application/json")
-    public List<Integer> listAllPreus(HttpSession session) {
+    @GetMapping(path="/jajaja")
+    @JsonView(Views.Private.class)
+    public Collection<Client> jajaja(HttpSession session) {
+        Long userId = getLoggedUser(session);
+        return clientService.getClients(userId);
+    }
+
+    @GetMapping(path="/llistatClientsDates")
+    @JsonView(Views.Private.class)
+    public Collection<Client> llistatClientsDates(HttpSession session) {
         Long userId = getLoggedUser(session);
         Collection<Client> llistatClients = clientService.getClients(userId);
 
-        List<Integer> llistaPreus = null;
-        for(Client c : llistatClients){
-            llistaPreus.add(c.getPreuTotal());
-        }
-        return llistaPreus;
-    }
+        Date data1 = new GregorianCalendar(2019, Calendar.AUGUST, 01).getTime();
+        Date data2 = new Date();
 
+        Collection<Client> llistaClients = null;
+        for(Client c : llistatClients){
+            if (((c.getDataClient().compareTo(data1)==0) || (c.getDataClient().compareTo(data2)==0))
+                || ((c.getDataClient().compareTo(data1)>0 && c.getDataClient().compareTo(data2)<0)))
+                llistaClients.add(c);
+        }
+        return llistaClients;
+    }
 
 
     @PostMapping(path="/afegirClient", consumes = "application/json")

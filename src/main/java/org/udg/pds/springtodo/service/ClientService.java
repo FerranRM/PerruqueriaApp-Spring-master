@@ -9,12 +9,8 @@ import org.udg.pds.springtodo.controller.exceptions.ServiceException;
 import org.udg.pds.springtodo.entity.*;
 import org.udg.pds.springtodo.repository.ClientRepository;
 
-import java.rmi.server.ServerCloneException;
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
+
 
 @Service
 public class ClientService {
@@ -23,7 +19,7 @@ public class ClientService {
     PerruquerService perruquerService;
 
     @Autowired
-    ClientRepository clientRepository;
+    private ClientRepository clientRepository;
 
     @Autowired
     protected ProducteService producteService;
@@ -63,26 +59,6 @@ public class ClientService {
         }
 
     }
-
-    /*@Transactional
-    public IdObject addClient(Client client, Long perruquerId) {
-
-        try {
-            Perruquer user = perruquerService.getPerruquer(perruquerId);
-
-            client.setPerruquer(user);
-
-            user.addClient(client);
-
-            clientRepository.save(client);
-            return new IdObject(client.getIdClient());
-        } catch (Exception ex) {
-            // Very important: if you want that an exception reaches the EJB caller, you have to throw an ServiceException
-            // We catch the normal exception and then transform it in a ServiceException
-            throw new ServiceException(ex.getMessage());
-        }
-
-    }*/
 
     @Transactional
     public void addProductesToClient(Long userId, Long clientId, Collection<Long> productes) {

@@ -23,7 +23,7 @@ public class Client implements Serializable {
         this.preuTotal = preu;
         this.sexeClient = sexe;
         this.pentinatClient = pentinatClient;
-        this.data = data;
+        this.dataClient = data;
     }
 
 
@@ -47,7 +47,7 @@ public class Client implements Serializable {
     private Integer pentinatClient;
 
     @NotNull
-    private Date data;
+    private Date dataClient;
 
     /*@OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
     private Collection<Producte> productes;*/
@@ -112,14 +112,9 @@ public class Client implements Serializable {
     }
 
     @JsonView(Views.Private.class)
-    public Date getData() {return data;}
+    public Date getDataClient() {return dataClient;}
 
-    public void setData(Date data) {this.data= data;}
-
-    /*@JsonView(Views.Complete.class)
-    public Set<Producte> getProductes() { return productes; }
-
-    public void setProductes(Set<Producte> productes) { this.productes = productes; }*/
+    public void setDataClient(Date data) {this.dataClient= data;}
 
     public void addProducte(Producte producte) {
         productes.add(producte);
