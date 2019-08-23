@@ -8,7 +8,6 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Set;
 
 @Entity(name = "perruquers")
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"email", "nomPerruquer"}))
@@ -26,7 +25,9 @@ public class Perruquer implements Serializable {
     this.email = email;
     this.contrasenya = contrasenya;
     this.tasks = new ArrayList<>();
+
     this.clients = new ArrayList<>();
+    this.reserves = new ArrayList<>();
   }
 
   @Id
@@ -45,11 +46,11 @@ public class Perruquer implements Serializable {
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "perruquer")
   private Collection<Task> tasks;
 
-  /*@OneToMany(mappedBy = "perruquer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-  private Set<Client> clients;*/
-
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "perruquer")
   private Collection<Client> clients;
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "perruquer")
+  private Collection<Reserva> reserves;
 
 
 
@@ -106,5 +107,17 @@ public class Perruquer implements Serializable {
   }
 
 
+
+
+
+  @JsonView(Views.Complete.class)
+  public Collection<Reserva> getReserves() {
+    reserves.size();
+    return reserves;
+  }
+
+  public void addReserva(Reserva reserva) {
+    reserves.add(reserva);
+  }
 
 }
