@@ -1,10 +1,8 @@
 package org.udg.pds.springtodo.controller;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.udg.pds.springtodo.entity.Producte;
-import org.udg.pds.springtodo.entity.Views;
 import org.udg.pds.springtodo.service.ProducteService;
 
 import javax.servlet.http.HttpSession;
@@ -16,40 +14,53 @@ import java.util.Collection;
 @RestController
 public class ProducteController extends BaseController {
 
-    @Autowired
-    ProducteService producteService;
+  @Autowired
+  ProducteService producteService;
 
-    @GetMapping("{id}")
-    public Producte getProducte(HttpSession session,
-                      @PathVariable("id") Long id) {
+  @GetMapping("{id}")
+  public Producte getProducte(HttpSession session,
+                    @PathVariable("id") Long id) {
 
-        getLoggedUser(session);
-        return producteService.getProducte(id);
+    getLoggedUser(session);
+    return producteService.getProducte(id);
+  }
+
+  @GetMapping
+  public Collection<Producte> listAllProductes(HttpSession session) {
+
+    Long userId = getLoggedUser(session);
+
+    return producteService.getProductes();
+  }
+
+  @PostMapping(consumes = "application/json")
+  public String addProducte(@Valid @RequestBody R_Producte producte, HttpSession session) {
+
+    Long userId = getLoggedUser(session);
+
+    if (producte.descripcioProducte == null) {
+      producte.descripcioProducte = "";
     }
 
-    @GetMapping
-    @JsonView(Views.Private.class)
-    public Collection<Producte> listAllProductes(HttpSession session) {
-        Long userId = getLoggedUser(session);
-        return producteService.getProductes();
-    }
+    producteService.addProducte(producte.preuProducte, producte.descripcioProducte);
+    return BaseController.OK_MESSAGE;
+  }
 
+  @DeleteMapping(path="/{id}")
+  public String deleteProducte(HttpSession session,
+                            @PathVariable("id") Long producteId) {
 
-    @PostMapping(path="/afegirProducte", consumes = "application/json")
-    public String addProducte(@Valid @RequestBody R_Producte producte, HttpSession session) {
+    Long userId = getLoggedUser(session);
 
-        //Long userId = getLoggedUser(session);
+    producteService.crud().deleteById(producteId);
+    return BaseController.OK_MESSAGE;
+  }
 
-        producteService.addProducte(producte.descProducte, producte.preuProducte);
-        return BaseController.OK_MESSAGE;
-    }
+  static class R_Producte {
+    @NotNull
+    public Integer preuProducte;
 
-    static class R_Producte {
+    public String descripcioProducte;
+  }
 
-        @NotNull
-        private String descProducte;
-
-        @NotNull
-        private Integer preuProducte;
-    }
 }

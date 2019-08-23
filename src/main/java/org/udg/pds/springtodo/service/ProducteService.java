@@ -15,41 +15,38 @@ import java.util.stream.StreamSupport;
 @Service
 public class ProducteService {
 
-    @Autowired
-    PerruquerService perruquerService;
+  @Autowired
+  ProducteRepository producteRepository;
 
-    @Autowired
-    ProducteRepository producteRepository;
+  public ProducteRepository crud() {
+    return producteRepository;
+  }
 
-    public ProducteRepository crud() {
-        return producteRepository;
+  public Producte getProducte(Long id) {
+    Optional<Producte> ot = producteRepository.findById(id);
+    if (!ot.isPresent())
+      throw new ServiceException("Producte no existeix");
+    else
+      return ot.get();
+  }
+
+  public Producte addProducte(Integer name, String description) {
+    try {
+      Producte producte = new Producte(name, description);
+
+      producteRepository.save(producte);
+      return producte;
+    } catch (Exception ex) {
+      // Very important: if you want that an exception reaches the EJB caller, you have to throw an EJBException
+      // We catch the normal exception and then transform it in a EJBException
+      throw new ServiceException(ex.getMessage());
     }
+  }
 
-    public Producte getProducte(Long id) {
-        Optional<Producte> ot = producteRepository.findById(id);
-        if (!ot.isPresent())
-            throw new ServiceException("Producte no existeix");
-        else
-            return ot.get();
-    }
+  public Collection<Producte> getProductes() {
+    Collection<Producte> r = new ArrayList<>();
 
-    public Producte addProducte(String descProducte, Integer preuProducte) {
-        try {
-            Producte nouProducte = new Producte(descProducte, preuProducte);
-
-            producteRepository.save(nouProducte);
-            return nouProducte;
-        } catch (Exception ex) {
-            // Very important: if you want that an exception reaches the EJB caller, you have to throw an EJBException
-            // We catch the normal exception and then transform it in a EJBException
-            throw new ServiceException(ex.getMessage());
-        }
-    }
-
-    public Collection<Producte> getProductes() {
-        Collection<Producte> r = new ArrayList<>();
-
-        return StreamSupport.stream(producteRepository.findAll().spliterator(), false)
-                .collect(Collectors.toList());
-    }
+    return StreamSupport.stream(producteRepository.findAll().spliterator(), false)
+            .collect(Collectors.toList());
+  }
 }

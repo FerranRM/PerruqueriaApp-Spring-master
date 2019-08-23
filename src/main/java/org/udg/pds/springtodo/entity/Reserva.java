@@ -9,27 +9,22 @@ import org.udg.pds.springtodo.serializer.JsonDateSerializer;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 
 @Entity
 // This tells JAXB that it has to ignore getters and setters and only use fields for JSON marshaling/unmarshaling
-public class Client implements Serializable {
+public class Reserva implements Serializable {
   /**
    * Default value included to remove warning. Remove or modify at will.
    **/
   private static final long serialVersionUID = 1L;
 
-  public Client() {
+  public Reserva() {
   }
 
-  public Client(Date dataClient, Integer pentinatClient, Boolean sexeClient, String nomClient, Integer preuTotal) {
-    this.dataClient = dataClient;
-    this.pentinatClient = pentinatClient;
-    this.sexeClient = sexeClient;
-    this.nomClient = nomClient;
-    this.preuTotal = preuTotal;
+  public Reserva(Date dataReserva, String nomReserva) {
+    this.dataReserva = dataReserva;
+    this.nomReserva = nomReserva;
   }
 
   // This tells JAXB that this field can be used as ID
@@ -39,15 +34,9 @@ public class Client implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private Date dataClient;
+  private Date dataReserva;
 
-  private Integer pentinatClient;
-
-  private Boolean sexeClient;
-
-  private String nomClient;
-
-  private Integer preuTotal;
+  private String nomReserva;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "fk_perruquer")
@@ -56,8 +45,8 @@ public class Client implements Serializable {
   @Column(name = "fk_perruquer", insertable = false, updatable = false)
   private Long perruquerId;
 
-  @ManyToMany(cascade = CascadeType.ALL)
-  private Collection<Producte> productes = new ArrayList<>();
+
+
 
   @JsonView(Views.Private.class)
   public Long getId() {
@@ -77,34 +66,10 @@ public class Client implements Serializable {
     this.perruquer = perruquer;
   }
 
-  public void addProducte(Producte producte) {
-    productes.add(producte);
-  }
-
-  @JsonView(Views.Complete.class)
-  public Collection<Producte> getProductes() {
-    productes.size();
-    return productes;
-  }
 
   @JsonView(Views.Private.class)
-  public Boolean getSexeClient() {
-    return sexeClient;
-  }
-
-  @JsonView(Views.Private.class)
-  public String getNomClient() {
-    return nomClient;
-  }
-
-  @JsonView(Views.Private.class)
-  public Integer getPreuTotal() {
-    return pentinatClient;
-  }
-
-  @JsonView(Views.Private.class)
-  public Integer getPentinatClient() {
-    return pentinatClient;
+  public String getNomReserva() {
+    return nomReserva;
   }
 
   @JsonView(Views.Complete.class)
@@ -115,8 +80,8 @@ public class Client implements Serializable {
   @JsonView(Views.Private.class)
   @JsonSerialize(using = JsonDateSerializer.class)
   @JsonDeserialize(as= JsonDateDeserializer.class)
-  public Date getDataClient() {
-    return dataClient;
+  public Date getDataReserva() {
+    return dataReserva;
   }
 
 }
