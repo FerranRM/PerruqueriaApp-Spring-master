@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.udg.pds.springtodo.controller.exceptions.ServiceException;
 import org.udg.pds.springtodo.entity.Perruquer;
 import org.udg.pds.springtodo.entity.Task;
+import org.udg.pds.springtodo.entity.Client;
 import org.udg.pds.springtodo.repository.PerruquerRepository;
 
 import java.util.List;
@@ -62,6 +63,12 @@ public class PerruquerService {
     Perruquer u = this.getPerruquer(id);
     for (Task t : u.getTasks())
       t.getTags();
+
+    for (Client c : u.getClients())
+      c.getProductes();
+
+    u.getReserves();
+
     return u;
   }
 }
