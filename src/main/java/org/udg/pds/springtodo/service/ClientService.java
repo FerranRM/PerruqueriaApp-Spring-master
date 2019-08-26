@@ -12,6 +12,7 @@ import org.udg.pds.springtodo.repository.ClientRepository;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -34,6 +35,12 @@ public class ClientService {
     Optional<Perruquer> p = perruquerService.crud().findById(id);
     if (!p.isPresent()) throw new ServiceException("Perruquer no existeix");
     return p.get().getClients();
+  }
+
+  public List<Client> getClientsDates(Long id, Date data1, Date data2) {
+    Optional<Perruquer> p = perruquerService.crud().findById(id);
+    if (!p.isPresent()) throw new ServiceException("Perruquer no existeix");
+    return clientRepository.clientsEntreDates(data1,data2);
   }
 
   public Client getClient(Long userId, Long id) {
@@ -87,7 +94,7 @@ public class ClientService {
     }
   }
 
-  public Collection<Producte> getClientsProductes(Long userId, Long id) {
+  public Collection<Producte> getClientProductes(Long userId, Long id) {
     Client t = this.getClient(userId, id);
     Perruquer u = t.getPerruquer();
 

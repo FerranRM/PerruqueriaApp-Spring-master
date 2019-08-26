@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
-@Entity
+@Entity(name = "clients")
 // This tells JAXB that it has to ignore getters and setters and only use fields for JSON marshaling/unmarshaling
 public class Client implements Serializable {
   /**
@@ -99,7 +99,7 @@ public class Client implements Serializable {
 
   @JsonView(Views.Private.class)
   public Integer getPreuTotal() {
-    return pentinatClient;
+    return preuTotal;
   }
 
   @JsonView(Views.Private.class)

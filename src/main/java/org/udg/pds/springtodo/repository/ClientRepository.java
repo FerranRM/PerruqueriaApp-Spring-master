@@ -11,6 +11,6 @@ import java.util.List;
 
 @Component
 public interface ClientRepository extends CrudRepository<Client, Long> {
-    /*@Query("SELECT c FROM clients c WHERE c.dataClient between :data1 and :data2")
-    List<Client> clientsEntreDates(@Param("data1") Date data1, @Param("data2") Date data2);*/
+    @Query("SELECT c FROM clients c WHERE c.dataClient between :data1 and :data2")
+    List<Client> clientsEntreDates(@Param("data1") Date data1, @Param("data2") Date data2);
 }

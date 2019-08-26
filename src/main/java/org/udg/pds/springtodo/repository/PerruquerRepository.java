@@ -4,11 +4,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
-import org.udg.pds.springtodo.entity.Client;
 import org.udg.pds.springtodo.entity.Perruquer;
 
-import java.util.Collection;
-import java.util.Date;
+
 import java.util.List;
 
 @Component

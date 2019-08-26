@@ -98,40 +98,14 @@ public class Global {
 
         Date currentTime = Calendar.getInstance().getTime();
 
-        /*Producte producte = producteService.addProducte("Crema para la cara",8);
-        producteService.addProducte("Laca para el pelo",5);
-        Producte producte3 = producteService.addProducte("Cera para el pelo",14);
-
-        producteService.addProducte("Cera en polvo para el pelo",12);
-        producteService.addProducte("Champú especial",8);
-        producteService.addProducte("Aceite para la barba",7);
-        producteService.addProducte("Gomina para el pelo",9);*/
-
         Perruquer perruquer = perruquerService.register("fer", "fer@hotmail.com", "123");
 
 
-        /*IdObject clientId = clientService.addClient("Ferran Rodriguez", 12, false,1,currentTime,perruquer.getId());
-        clientService.addClient("David Tellez", 19, false,2,currentTime,perruquer.getId());
-
-
-
-
-        clientService.addProductesToClient(perruquer.getId(), clientId.getId(), new ArrayList<Long>() {{
-            add(producte.getId());
-            add(producte3.getId());
-        }});*/
-
-
-
-        //Date data1 = new GregorianCalendar(2019, Calendar.JANUARY, 05).getTime();
-        //reserva2Service.addReserva("Ferran Rodríguez Martínez", new Date(), perruquer.getId());
-
-
-        IdObject clientId = clientService.addClient("Un client", perruquer.getId(), new Date(), 2, 16, false);
+        /*IdObject clientId = clientService.addClient("Un client", perruquer.getId(), new Date(), 2, 16, false);
         Producte producte = producteService.addProducte(14, "CERA PELO");
         clientService.addProductesToClient(perruquer.getId(), clientId.getId(), new ArrayList<Long>() {{
             add(producte.getId());
-        }});
+        }});*/
 
 
 

@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @RequestMapping(path="/clients")
 @RestController
@@ -65,27 +66,34 @@ public class ClientController extends BaseController {
 
   @DeleteMapping(path="/{id}")
   public String deleteClient(HttpSession session,
-                             @PathVariable("id") Long taskId) {
+                             @PathVariable("id") Long clientId) {
     getLoggedUser(session);
-    clientService.crud().deleteById(taskId);
+    clientService.crud().deleteById(clientId);
     return BaseController.OK_MESSAGE;
   }
 
   @PostMapping(path="/{id}/productes")
   public String addProductes(@RequestBody Collection<Long> productes, HttpSession session,
-                        @PathVariable("id") Long taskId) {
+                        @PathVariable("id") Long clientId) {
 
     Long userId = getLoggedUser(session);
-    clientService.addProductesToClient(userId, taskId, productes);
+    clientService.addProductesToClient(userId, clientId, productes);
     return BaseController.OK_MESSAGE;
   }
 
   @GetMapping(path="/{id}/productes")
-  public Collection<Producte> getTaskProductes(HttpSession session,
-                                          @PathVariable("id") Long taskId) {
+  public Collection<Producte> getClientProductes(HttpSession session,
+                                          @PathVariable("id") Long clientId) {
 
     Long userId = getLoggedUser(session);
-    return clientService.getClientsProductes(userId, taskId);
+    return clientService.getClientProductes(userId, clientId);
+  }
+
+  @GetMapping(path="/{data1,data2}")
+  public List<Client> listClientsDates(HttpSession session,
+                                       @RequestParam(value = "data1", required = true) Date data1,
+                                       @RequestParam(value = "data2", required = true) Date data2) {
+    return clientService.crud().clientsEntreDates(data1,data2);
   }
 
   static class R_Client {
