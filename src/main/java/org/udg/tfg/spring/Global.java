@@ -45,6 +45,10 @@ public class Global {
     private
     ProducteService producteService;
 
+    @Autowired
+    private
+    TallCabellsService tallCabellsService;
+
 
     @Value("${todospring.minio.url:}")
     private String minioURL;
@@ -90,9 +94,19 @@ public class Global {
     private void initData() {
         logger.info("Starting populating database ...");
 
-        Date currentTime = Calendar.getInstance().getTime();
+        perruquerService.register("dtellez", "David Tellez Lorenzo", "1234");
 
-        Perruquer perruquer = perruquerService.register("fer", "fer@hotmail.com", "123");
+        tallCabellsService.addTallCabells(9, "Corte");
+        tallCabellsService.addTallCabells(7, "Máquina");
+        tallCabellsService.addTallCabells(3, "Cejas");
+        tallCabellsService.addTallCabells(4, "Barba");
+
+        producteService.addProducte(5,"Laca");
+        producteService.addProducte(7,"Cera");
+        producteService.addProducte(5,"Cera en polvo");
+        producteService.addProducte(8,"Aceite barba");
+        producteService.addProducte(8,"Gomina");
+
 
 
         /*IdObject clientId = clientService.addClient("Un client", perruquer.getId(), new Date(), 2, 16, false);
