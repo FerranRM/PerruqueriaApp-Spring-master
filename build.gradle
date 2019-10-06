@@ -45,7 +45,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.6'
     annotationProcessor 'org.projectlombok:lombok:1.18.6'
 
-    implementation 'postgresql:postgresql'
+    implementation('org.postgresql:postgresql')
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }
