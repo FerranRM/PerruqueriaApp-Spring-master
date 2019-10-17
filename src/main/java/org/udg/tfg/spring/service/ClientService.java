@@ -47,11 +47,11 @@ public class ClientService {
 
   @Transactional
   public IdObject addClient(String nomClient, Long userId,
-                          Date dataClient, Integer pentinatClient, Integer preuTotal, Boolean sexeClient) {
+                          Date dataClient, Integer preuTotal, Boolean sexeClient) {
     try {
       Perruquer user = perruquerService.getPerruquer(userId);
 
-      Client client = new Client(dataClient, pentinatClient, sexeClient, nomClient, preuTotal);
+      Client client = new Client(dataClient, sexeClient, nomClient, preuTotal);
 
       client.setPerruquer(user);
 

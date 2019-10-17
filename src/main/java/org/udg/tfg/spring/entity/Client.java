@@ -22,9 +22,8 @@ public class Client implements Serializable {
   public Client() {
   }
 
-  public Client(Date dataClient, Integer pentinatClient, Boolean sexeClient, String nomClient, Integer preuTotal) {
+  public Client(Date dataClient, Boolean sexeClient, String nomClient, Integer preuTotal) {
     this.dataClient = dataClient;
-    this.pentinatClient = pentinatClient;
     this.sexeClient = sexeClient;
     this.nomClient = nomClient;
     this.preuTotal = preuTotal;
@@ -35,8 +34,6 @@ public class Client implements Serializable {
   private Long id;
 
   private Date dataClient;
-
-  private Integer pentinatClient;
 
   private Boolean sexeClient;
 
@@ -95,11 +92,6 @@ public class Client implements Serializable {
   @JsonView(Views.Private.class)
   public Integer getPreuTotal() {
     return preuTotal;
-  }
-
-  @JsonView(Views.Private.class)
-  public Integer getPentinatClient() {
-    return pentinatClient;
   }
 
   @JsonView(Views.Complete.class)

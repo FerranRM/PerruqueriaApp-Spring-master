@@ -61,9 +61,6 @@ public class ClientController extends BaseController {
     if (client.dataClient == null) {
       throw new ControllerException("No dataClient supplied");
     }
-    if (client.pentinatClient == null) {
-      throw new ControllerException("No limit date supplied");
-    }
     if (client.preuTotal == null) {
       throw new ControllerException("No preuTotal supplied");
     }
@@ -71,7 +68,7 @@ public class ClientController extends BaseController {
       throw new ControllerException("No sexeClient supplied");
     }
 
-    return clientService.addClient(client.nomClient, userId, client.dataClient, client.pentinatClient, client.preuTotal, client.sexeClient);
+    return clientService.addClient(client.nomClient, userId, client.dataClient, client.preuTotal, client.sexeClient);
   }
 
   @DeleteMapping(path="/{id}")
@@ -107,9 +104,6 @@ public class ClientController extends BaseController {
     @NotNull
     @JsonDeserialize(using= JsonDateDeserializer.class)
     public Date dataClient;
-
-    @NotNull
-    public Integer pentinatClient;
 
     @NotNull
     public Integer preuTotal;
