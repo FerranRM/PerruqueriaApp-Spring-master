@@ -118,7 +118,7 @@ public class Global {
 
 
 
-        perruquerService.register("user", "user@hotmail.com", "0000");
+        perruquerService.register("ferran", "Ferran Rodriguez Martinez", "1234");
     }
 
     public MinioClient getMinioClient() {
