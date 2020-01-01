@@ -5,14 +5,13 @@ Consta de 5 pantalles principals ques es troben en un Bottom navigation per fer 
 
 ```diff
 Aquestes 5 pantalles són:
-+ Principal: Afegir un client fet amb les seves dades (Nom, Sexe, Pentinat, Productes comprats, preu total, data)
++ Principal: Afegir un client fet amb les seves dades (Nom, gènere, servei prestat i/o productes comprats, preu total, data)
 + Calendari: visualitzar i editar els clients que atendrà el perruquer.
-! Estadístiques: veure estadístiques varies dels clients que ha fet el perruquer al llarg de l'any o altres anys.
-- Ajustos: editar el perfil de l'usuari (notificacions, modificacions de nom, contrasenya ...)
-- Alertes: missatges entre els treballadors
++ Estadístiques: veure estadístiques varies dels clients que ha fet el perruquer al llarg de l'any.
++ Ajustos: afegir o eliminar productes o serveis i possibilitat de sortir de la sessió.
 ```
 
-This is a Spring Boot application that implements an pure API REST for a D.Tellez appication. It works with the the [TODOandroid](https://github.com/neich/TODOAndroid) Android application as client.
+This is a Spring Boot application that implements an pure API REST for a D.Tellez application. It works with the the [TODOandroid](https://github.com/neich/TODOAndroid) Android application as client.
 
 The main three tiers used are:
 
