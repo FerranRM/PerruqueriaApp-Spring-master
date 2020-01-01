@@ -6,17 +6,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.udg.tfg.spring.entity.*;
 import org.udg.tfg.spring.repository.ClientRepository;
 import org.udg.tfg.spring.repository.PerruquerRepository;
-import org.udg.tfg.spring.service.*;
-import org.udg.tfg.spring.entity.IdObject;
-import org.udg.tfg.spring.entity.Perruquer;
 import org.udg.tfg.spring.service.*;
 
 import javax.annotation.PostConstruct;
 import java.text.SimpleDateFormat;
-import java.util.*;
 
 @Service
 public class Global {
@@ -47,7 +42,7 @@ public class Global {
 
     @Autowired
     private
-    TallCabellsService tallCabellsService;
+    ServeiPrestatService serveiPrestatService;
 
 
     @Value("${todospring.minio.url:}")
@@ -92,14 +87,15 @@ public class Global {
 
 
     private void initData() {
-        logger.info("Starting populating database ...");
+        logger.info("Iniciant la base de dades inicial ...");
 
-        perruquerService.register("dtellez", "David Tellez Lorenzo", "1234");
+        perruquerService.register("d", "David Tellez Lorenzo", "1");
+        perruquerService.register("f", "Ferran Rodriguez Martinez", "1");
 
-        tallCabellsService.addTallCabells(9, "Corte");
-        tallCabellsService.addTallCabells(7, "Máquina");
-        tallCabellsService.addTallCabells(3, "Cejas");
-        tallCabellsService.addTallCabells(4, "Barba");
+        serveiPrestatService.addServeiPrestat(9, "Corte");
+        serveiPrestatService.addServeiPrestat(7, "Máquina");
+        serveiPrestatService.addServeiPrestat(3, "Cejas");
+        serveiPrestatService.addServeiPrestat(4, "Barba");
 
         producteService.addProducte(5,"Laca");
         producteService.addProducte(7,"Cera");
@@ -116,9 +112,6 @@ public class Global {
         }});*/
 
 
-
-
-        perruquerService.register("ferran", "Ferran Rodriguez Martinez", "1234");
     }
 
     public MinioClient getMinioClient() {

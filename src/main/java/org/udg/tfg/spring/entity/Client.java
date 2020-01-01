@@ -22,11 +22,12 @@ public class Client implements Serializable {
   public Client() {
   }
 
-  public Client(Date dataClient, Boolean sexeClient, String nomClient, Integer preuTotal) {
+  public Client(Date dataClient, Boolean sexeClient, String nomClient, Integer preuTotal, Long userId) {
     this.dataClient = dataClient;
     this.sexeClient = sexeClient;
     this.nomClient = nomClient;
     this.preuTotal = preuTotal;
+    this.perruquerId = userId;
   }
 
   @Id

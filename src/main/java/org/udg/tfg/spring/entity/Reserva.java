@@ -22,9 +22,10 @@ public class Reserva implements Serializable {
   public Reserva() {
   }
 
-  public Reserva(Date dataReserva, String nomReserva) {
+  public Reserva(Date dataReserva, String nomReserva, Long userId) {
     this.dataReserva = dataReserva;
     this.nomReserva = nomReserva;
+    this.perruquerId = userId;
   }
 
   // This tells JAXB that this field can be used as ID

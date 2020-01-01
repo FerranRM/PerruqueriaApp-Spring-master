@@ -35,9 +35,9 @@ public class ReservaService {
 
   public Reserva getReserva(Long userId, Long id) {
     Optional<Reserva> t = reservaRepository.findById(id);
-    if (!t.isPresent()) throw new ServiceException("Reserva does not exists");
+    if (!t.isPresent()) throw new ServiceException("La reserva no existeix");
     if (t.get().getPerruquer().getId() != userId)
-      throw new ServiceException("User does not own this reserva");
+      throw new ServiceException("Aquest usuari no és el propietari d'aquesta reserva");
     return t.get();
   }
 
@@ -46,7 +46,7 @@ public class ReservaService {
     try {
       Perruquer user = perruquerService.getPerruquer(userId);
 
-      Reserva reserva = new Reserva(dataReserva, nomReserva);
+      Reserva reserva = new Reserva(dataReserva, nomReserva, userId);
 
       reserva.setPerruquer(user);
 

@@ -38,10 +38,11 @@ public class ReservaController extends BaseController {
   public Collection<Reserva> listAllReserves(HttpSession session,
                                              @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") Date data1,
                                              @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") Date data2) {
+    Long userId = getLoggedUser(session);
+
     if (data1 != null)
-      return reservaService.crud().reservesEntreDates(data1,data2);
+      return reservaService.crud().reservesEntreDates(data1, data2, userId);
     else {
-      Long userId = getLoggedUser(session);
       return reservaService.getReserves(userId);
     }
   }
@@ -55,7 +56,7 @@ public class ReservaController extends BaseController {
       throw new ControllerException("No text supplied");
     }
     if (reserva.dataReserva == null) {
-      throw new ControllerException("No creation date supplied");
+      throw new ControllerException("No s'ha proporcionat la dataReserva");
     }
 
     return reservaService.addReserva(reserva.nomReserva, userId, reserva.dataReserva);

@@ -39,7 +39,7 @@ public class ProducteController extends BaseController {
     Long userId = getLoggedUser(session);
 
     if (producte.descripcioProducte == null) {
-      producte.descripcioProducte = "";
+      producte.descripcioProducte = " ";
     }
 
     producteService.addProducte(producte.preuProducte, producte.descripcioProducte);

@@ -8,19 +8,19 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 
-@Entity(name = "tallCabells")
-public class TallCabells implements Serializable {
+@Entity(name = "serveiPrestat")
+public class ServeiPrestat implements Serializable {
   /**
    * Default value included to remove warning. Remove or modify at will.
    **/
   private static final long serialVersionUID = 1L;
 
-  public TallCabells() {
+  public ServeiPrestat() {
   }
 
-  public TallCabells(Integer preuTall, String descripcioTall) {
-    this.preuTall = preuTall;
-    this.descripcioTall = descripcioTall;
+  public ServeiPrestat(Integer preuServei, String descripcioServei) {
+    this.preuServei = preuServei;
+    this.descripcioServei = descripcioServei;
   }
 
   // This tells JAXB that this field can be used as ID
@@ -31,24 +31,24 @@ public class TallCabells implements Serializable {
   private Long id;
 
   @NotNull
-  private Integer preuTall;
+  private Integer preuServei;
 
   @NotNull
-  private String descripcioTall;
+  private String descripcioServei;
 
-  public Integer getPreuTall() {
-    return preuTall;
+  public Integer getPreuServei() {
+    return preuServei;
   }
 
-  public void setPreuTall(Integer preuTall) {
-    this.preuTall = preuTall;
+  public void setPreuServei(Integer preuServei) {
+    this.preuServei = preuServei;
   }
 
   public Long getId() {
     return id;
   }
 
-  public String getDescripcioTall() {
-        return descripcioTall;
+  public String getDescripcioServei() {
+        return descripcioServei;
     }
 }

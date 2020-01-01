@@ -40,7 +40,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         return handleExceptionInternal(ex,
                 new Error(Global.dateFormat.format(new Date()),
                         status.value(),
-                        "Validation failed for body",
+                        "La validació ha fallat per al cos",
                         sb.toString()),
                 headers, status, request);
     }
@@ -52,7 +52,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         return handleExceptionInternal(ex,
                 new Error(Global.dateFormat.format(new Date()),
                         status.value(),
-                        "Message not readable",
+                        "Missatge no llegible",
                         ex.getMessage()),
                 headers, status, request);
     }
@@ -66,21 +66,21 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
             return handleExceptionInternal(ex,
                     new Error(Global.dateFormat.format(new Date()),
                             HttpStatus.BAD_REQUEST.value(),
-                            "Service error",
+                            "Error de servei",
                             ex.getMessage()),
                     new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
         } else if (ex instanceof ControllerException) {
             return handleExceptionInternal(ex,
                     new Error(Global.dateFormat.format(new Date()),
                             HttpStatus.BAD_REQUEST.value(),
-                            "Controller error",
+                            "Error de controlador",
                             ex.getMessage()),
                     new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
         } else
             return handleExceptionInternal(ex,
                 new Error(Global.dateFormat.format(new Date()),
                         HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                        "Unknown error",
+                        "Error desconegut",
                         ex.getMessage()),
                 new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }

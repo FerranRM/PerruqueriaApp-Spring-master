@@ -34,7 +34,7 @@ public class BaseController {
     Long userId = (Long)session.getAttribute("simpleapp_auth_id");
     // Check if the session has the attribute "simpleapp_auth_id"
     if (userId != null)
-      throw new ControllerException("Perruquer is already authenticated!");
+      throw new ControllerException("Perruquer ja està autenticat!");
   }
 
   MappingJacksonValue toResponse(Object pojo, Class<?> view) {

@@ -30,7 +30,7 @@ public class ImageController extends BaseController {
 
         MinioClient minioClient = global.getMinioClient();
         if (minioClient == null)
-            throw new ControllerException("Minio client not configured");
+            throw new ControllerException("Minio client no configurat");
 
         try {
             // Handle the body of that part with an InputStream
@@ -46,7 +46,7 @@ public class ImageController extends BaseController {
                     contentType);
 
         } catch (Exception e) {
-            throw new ControllerException("Error saving file: " + e.getMessage());
+            throw new ControllerException("Error guardant l'arxiu: " + e.getMessage());
         }
 
 
@@ -58,7 +58,7 @@ public class ImageController extends BaseController {
 
         MinioClient minioClient = global.getMinioClient();
         if (minioClient == null)
-            throw new ControllerException("Minio client not configured");
+            throw new ControllerException("Minio client no configurat");
 
         try {
             InputStream file = minioClient.getObject(global.getMinioBucket(), filename);
@@ -70,7 +70,7 @@ public class ImageController extends BaseController {
             return ResponseEntity.ok().headers(headers).body(body);
 
         } catch (Exception e) {
-            throw new ControllerException("Error downloading file: " + e.getMessage());
+            throw new ControllerException("Error descarregant l'arxiu: " + e.getMessage());
         }
     }
 

@@ -19,6 +19,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @RequestMapping(path="/clients")
 @RestController
@@ -39,12 +40,21 @@ public class ClientController extends BaseController {
   @JsonView(Views.Private.class)
   public Collection<Client> listAllClients(HttpSession session,
                                            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") Date data1,
-                                           @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") Date data2) {
+                                           @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") Date data2,
+                                           @RequestParam(required = false) Long idPerruquer) {
 
-    if (data1 != null)
-      return clientService.crud().clientsEntreDates(data1, data2);
+
+    Long userId = getLoggedUser(session);
+
+    if (idPerruquer != null) {
+      userId = idPerruquer;
+    }
+
+    if (data1 != null) {
+      List<Client> clients = clientService.crud().clientsEntreDates(data1, data2, userId);
+      return clients;
+    }
     else {
-      Long userId = getLoggedUser(session);
       return clientService.getClients(userId);
     }
   }
@@ -56,16 +66,16 @@ public class ClientController extends BaseController {
     Long userId = getLoggedUser(session);
 
     if (client.nomClient == null) {
-      throw new ControllerException("No nomClient supplied");
+      throw new ControllerException("No s'ha proporcionat el nomClient");
     }
     if (client.dataClient == null) {
-      throw new ControllerException("No dataClient supplied");
+      throw new ControllerException("No s'ha proporcionat la dataClient");
     }
     if (client.preuTotal == null) {
-      throw new ControllerException("No preuTotal supplied");
+      throw new ControllerException("No s'ha proporcionat el preuTotal");
     }
     if (client.sexeClient == null) {
-      throw new ControllerException("No sexeClient supplied");
+      throw new ControllerException("No s'ha proporcionat el sexeClient");
     }
 
     return clientService.addClient(client.nomClient, userId, client.dataClient, client.preuTotal, client.sexeClient);

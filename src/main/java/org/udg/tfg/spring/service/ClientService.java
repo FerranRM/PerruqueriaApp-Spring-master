@@ -39,9 +39,9 @@ public class ClientService {
 
   public Client getClient(Long userId, Long id) {
     Optional<Client> t = clientRepository.findById(id);
-    if (!t.isPresent()) throw new ServiceException("Client does not exists");
+    if (!t.isPresent()) throw new ServiceException("El client no existeix");
     if (t.get().getPerruquer().getId() != userId)
-      throw new ServiceException("User does not own this client");
+      throw new ServiceException("Aquest usuari no és el propietari del Client");
     return t.get();
   }
 
@@ -51,7 +51,7 @@ public class ClientService {
     try {
       Perruquer user = perruquerService.getPerruquer(userId);
 
-      Client client = new Client(dataClient, sexeClient, nomClient, preuTotal);
+      Client client = new Client(dataClient, sexeClient, nomClient, preuTotal, userId);
 
       client.setPerruquer(user);
 
@@ -71,7 +71,7 @@ public class ClientService {
     Client t = this.getClient(userId, clientId);
 
     if (t.getPerruquer().getId() != userId)
-      throw new ServiceException("This user is not the owner of the Client");
+      throw new ServiceException("Aquest usuari no és el propietari del Client");
 
     try {
       for (Long producteId : productes) {
@@ -79,7 +79,7 @@ public class ClientService {
         if (oProducte.isPresent())
           t.addProducte(oProducte.get());
         else
-          throw new ServiceException("Producte dos not exists");
+          throw new ServiceException("Producte no existeix");
       }
     } catch (Exception ex) {
       // Very important: if you want that an exception reaches the EJB caller, you have to throw an ServiceException
@@ -93,7 +93,7 @@ public class ClientService {
     Perruquer u = t.getPerruquer();
 
     if (u.getId() != userId)
-      throw new ServiceException("Logged user does not own the Client");
+      throw new ServiceException("L'usuari registrat no és propietari del Client");
 
     return t.getProductes();
   }
