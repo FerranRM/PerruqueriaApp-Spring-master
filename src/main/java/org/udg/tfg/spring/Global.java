@@ -12,6 +12,9 @@ import org.udg.tfg.spring.service.*;
 
 import javax.annotation.PostConstruct;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 @Service
 public class Global {
@@ -43,6 +46,10 @@ public class Global {
     @Autowired
     private
     ServeiPrestatService serveiPrestatService;
+
+    @Autowired
+    private
+    ReservaService reservaService;
 
 
     @Value("${todospring.minio.url:}")
@@ -104,6 +111,50 @@ public class Global {
         producteService.addProducte(8,"Gomina");
 
 
+        Calendar cReserva = GregorianCalendar.getInstance();
+        cReserva.set(Calendar.HOUR_OF_DAY, 9);
+        cReserva.set(Calendar.MINUTE, 15);
+        reservaService.addReserva("Carles Mallol Blai", (long) 1, cReserva.getTime());
+
+        cReserva.set(Calendar.HOUR_OF_DAY, 9);
+        cReserva.set(Calendar.MINUTE, 45);
+        reservaService.addReserva("José Rodríguez Espinosa", (long) 1, cReserva.getTime());
+
+        cReserva.set(Calendar.HOUR_OF_DAY, 10);
+        cReserva.set(Calendar.MINUTE, 10);
+        reservaService.addReserva("Xaro Martínez Herrera", (long) 1, cReserva.getTime());
+
+        cReserva.set(Calendar.HOUR_OF_DAY, 10);
+        cReserva.set(Calendar.MINUTE, 50);
+        reservaService.addReserva("Arlet Martí Rodríguez", (long) 1, cReserva.getTime());
+
+        cReserva.set(Calendar.HOUR_OF_DAY, 11);
+        cReserva.set(Calendar.MINUTE, 30);
+        reservaService.addReserva("David Téllez Lorenzo", (long) 1, cReserva.getTime());
+
+        cReserva.set(Calendar.HOUR_OF_DAY, 12);
+        cReserva.set(Calendar.MINUTE, 05);
+        reservaService.addReserva("Àlex Martí Nuñez", (long) 1, cReserva.getTime());
+
+        cReserva.set(Calendar.HOUR_OF_DAY, 16);
+        cReserva.set(Calendar.MINUTE, 05);
+        reservaService.addReserva("Marta Rodríguez Martínez", (long) 1, cReserva.getTime());
+
+        cReserva.set(Calendar.HOUR_OF_DAY, 17);
+        cReserva.set(Calendar.MINUTE, 00);
+        reservaService.addReserva("Adrián Quesada Lóepz", (long) 1, cReserva.getTime());
+
+        cReserva.set(Calendar.HOUR_OF_DAY, 17);
+        cReserva.set(Calendar.MINUTE, 35);
+        reservaService.addReserva("Davínia Jiménez", (long) 1, cReserva.getTime());
+
+        cReserva.set(Calendar.HOUR_OF_DAY, 18);
+        cReserva.set(Calendar.MINUTE, 15);
+        reservaService.addReserva("Josefina Rodríguez Espinosa", (long) 1, cReserva.getTime());
+
+        cReserva.set(Calendar.HOUR_OF_DAY, 19);
+        cReserva.set(Calendar.MINUTE, 24);
+        reservaService.addReserva("Manuel Rodríguez Méndez", (long) 1, cReserva.getTime());
 
         /*IdObject clientId = clientService.addClient("Un client", perruquer.getId(), new Date(), 2, 16, false);
         Producte producte = producteService.addProducte(14, "CERA PELO");

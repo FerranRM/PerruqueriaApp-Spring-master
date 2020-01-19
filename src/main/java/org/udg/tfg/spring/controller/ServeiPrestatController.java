@@ -28,8 +28,7 @@ public class ServeiPrestatController extends BaseController {
   @GetMapping
   public Collection<ServeiPrestat> listAllServeiPrestats(HttpSession session) {
 
-    Long userId = getLoggedUser(session);
-
+    getLoggedUser(session);
     return serveiPrestatService.getServeiPrestats();
   }
 

@@ -53,7 +53,7 @@ public class ReservaController extends BaseController {
     Long userId = getLoggedUser(session);
 
     if (reserva.nomReserva == null) {
-      throw new ControllerException("No text supplied");
+      throw new ControllerException("No s'ha proporcionat el nomReserva");
     }
     if (reserva.dataReserva == null) {
       throw new ControllerException("No s'ha proporcionat la dataReserva");

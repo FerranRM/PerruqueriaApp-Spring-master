@@ -49,7 +49,7 @@ public class Client implements Serializable {
   @Column(name = "fk_perruquer", insertable = false, updatable = false)
   private Long perruquerId;
 
-  @ManyToMany(cascade = CascadeType.ALL)
+  @ManyToMany
   private Collection<Producte> productes = new ArrayList<>();
 
   @JsonView(Views.Private.class)
